@@ -1,0 +1,396 @@
+/* Page Background */
+.profile-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card */
+.profile-card {
+  width: 50%;
+  padding: 12px 32px 20px 32px;
+  animation: slideFade 0.35s ease;
+  border-radius: 14px;
+  background-color: #eaf4fb;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+}
+
+/* Smooth Entry */
+@keyframes slideFade {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Headings */
+.profile-card h2 {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #6b7280;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs */
+.form-group input,
+.form-group select{
+  width: 90%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+/* Focus State */
+.form-group input:focus,
+.form-group select:focus,
+textarea {
+  outline: none;
+  border-color: #0929473b;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* Two Column Layout */
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+.row .form-group {
+  flex: 1;
+}
+
+/* Buttons Row */
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Buttons */
+.next-btn,
+.back-btn,
+.submit-btn {
+  padding: 11px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Primary Button */
+/* .next-btn {
+  background: #ffffff;
+  color: #030303;
+  box-shadow: inset 0px 4px 8px gray;
+}
+
+.next-btn:hover {
+  background: #0e3775;
+    box-shadow: 0px 4px 8px gray;
+} */
+
+/* Secondary Button */
+
+.back-btn, .next-btn {
+  background: #ffffff;
+  color: #000000b0;
+  box-shadow:inset 0px 4px 8px gray;
+  font-weight: 600;
+}
+
+
+.back-btn:hover, .next-btn:hover, .back-btn a:hover {
+  background: #0e3775;
+  color: white;
+  box-shadow: 0px 4px 8px gray;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: fit-content;
+  background: #0b4275;
+  color: #ffffff;
+  margin-top: 12px;
+}
+
+.submit-btn:hover {
+    box-shadow:  0px 4px 8px gray;
+
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .profile-card {
+    width: 100%;
+    padding: 24px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+.profile-content{
+  display: flex;
+  width: 80%;
+  border-radius: 14px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.219),
+    0 2px 6px rgba(0, 0, 0, 0.192);
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.247);
+     backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1;
+  color: white;
+  background-color: #0f2a44;
+}
+
+.img img {
+  width: 250px;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.219));
+}
+
+.img img:hover {
+  animation-play-state: paused;
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+}
+
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+.img, .motivation-text{
+  text-align: center;
+}
+
+.data {
+  width: 60%;
+}
+
+.logo{
+  background-color: #0c2d4d;
+  border-radius: 0.5rem;
+  justify-content: center;
+  display: flex;
+  padding: 5px;
+}
+
+.logo img{
+  width: 150px;
+}
+
+textarea {
+  width: 90%;
+  padding: 10px;
+  border-radius: 8px;
+  resize: none;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #2c3e50;
+  margin-top: 6px;
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  color: #0c2d4d;
+}
+
+
+.progress-container {
+  margin: 5px;
+  padding-bottom: 5px;
+}
+
+.progress-text {
+  font-size: 13px;
+  color: #0c2d4d;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e6ed;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #0c2d4d;
+  width: 0;
+  transition: width 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+.hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  display: block;
+}
+
+.error-text {
+  color: #e63946;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+
+.custom-file-input {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.form-group input[type="file"] {
+  opacity: 0; 
+  position: absolute;
+  cursor: pointer;
+}
+
+.form-group .file-label {
+  display: block;
+  padding: 10px 15px;
+  border: 1px solid #0c2d4d;
+  border-radius: 6px;
+  background-color: #f0f8ff;
+  text-align: center;
+}
+
+
+/* ===== Tablet & Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .profile-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .data {
+    margin-bottom: 20px;
+  }
+
+  .profile-card {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .form-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  /* Progress bar smaller text */
+  .progress-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== Mobile (Phones) ===== */
+@media (max-width: 768px) {
+  /* Hide startup image */
+  .data {
+    display: none;
+  }
+
+  .profile-card {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .skills {
+    flex-direction: column;
+  }
+
+  .skills label {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+.error-text {
+  color: #e63946;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* Make file input label responsive */
+.file-label {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.forgot-password{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+.forgot-password a{
+  color: #000000b0;
+  text-decoration: none;
+}
