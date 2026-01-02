@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase";
+import { Link } from "react-router-dom";
 
 const CreateProfile = () => {
   const [step, setStep] = useState(1);
@@ -114,6 +115,9 @@ const handleSubmit = async () => {
               Let AI match your skills with the right opportunities <br />
               <br />
             </p>
+            <div className="create">
+<Link to="/">Already have an account? Sign in</Link>
+  </div>
           </div>
         </div>
 
@@ -135,17 +139,17 @@ const handleSubmit = async () => {
           </div>
           {step === 1 && (
             <>
-              <h2>Basic Details</h2>
+              <h2><i className="fa-solid fa-user input-icon"></i> Basic Details</h2>
 
               <div className="row">
                 <div className="form-group">
                   <label>Full Name</label>
-                  <input value={fullName} onChange={e => setFullName(e.target.value)} />
+                  <input value={fullName} placeholder="Full Name" onChange={e => setFullName(e.target.value)} />
                 </div>
 
                 <div className="form-group">
                   <label>Working Email</label>
-                  <input value={email} onChange={e => setEmail(e.target.value)} />
+                  <input value={email} placeholder="Email" onChange={e => setEmail(e.target.value)} />
                </div>
               </div>
 
@@ -207,7 +211,7 @@ const handleSubmit = async () => {
 
           {step === 2 && (
             <>
-              <h2>Education</h2>
+              <h2><i className="fa-solid fa-graduation-cap"></i> Education</h2>
 
               <div className="row">
                 <div className="form-group">
@@ -257,7 +261,7 @@ const handleSubmit = async () => {
 
           {step === 3 && (
             <>
-              <h2>Preferred Job Details</h2>
+              <h2><i className="fa-solid fa-briefcase"></i> Preferred Job Details</h2>
 
               <div className="row">
                 <div className="form-group">
@@ -405,7 +409,7 @@ const handleSubmit = async () => {
           {/* STEP 2 */}
           {step === 4 && (
             <>
-              <h2>Experience</h2>
+              <h2><i className="fa-solid fa-chart-line input-icon"></i> Experience</h2>
 
               <div className="form-group">
                 <label>Experience</label>
@@ -443,14 +447,15 @@ const handleSubmit = async () => {
                       <input placeholder="Months" />
                     </div>
                   </div>
-                  <div className="row">
+                </>
+              )}
+
+              <div className="row">
                     <div className="form-group">
                       <label>Expected CTC (₹)</label>
                       <input placeholder="600000" />
                     </div>
                   </div>
-                </>
-              )}
 
               <div className="button-row">
                 <button className="back-btn" onClick={() => setStep(3)}>
@@ -466,7 +471,7 @@ const handleSubmit = async () => {
 
           {step === 5 && (
             <>
-              <h2>Social & Portfolio Links</h2>
+              <h2><i className="fa-solid fa-link input-icon"></i> Social & Portfolio Links</h2>
 
               <div className="row">
                 <div className="form-group">
@@ -530,7 +535,7 @@ const handleSubmit = async () => {
 
           {step === 6 && (
             <>
-              <h2>Summary</h2>
+              <h2> <i className="fa-solid fa-file-lines input-icon"></i> Summary</h2>
 
               <div className="form-group">
                 <label>Profile Summary</label>

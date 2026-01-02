@@ -21,11 +21,11 @@
 /* Smooth Entry */
 @keyframes slideFade {
   from {
-    transform: translateY(16px);
+    transform: translateX(16px);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
@@ -205,6 +205,18 @@ textarea {
 
 .data {
   width: 60%;
+  animation: leftFade 0.35s ease;
+}
+
+@keyframes leftFade {
+  from {
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .logo{
@@ -388,9 +400,67 @@ textarea {
   justify-content: space-between;
   align-items: center;
   padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .forgot-password a{
   color: #000000b0;
   text-decoration: none;
+}
+
+:root {
+  
+  --white: #ffffff;
+  --gray: #1f1e1e;
+  --orange: #bd4e04;
+}
+
+.create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.create a:hover{
+      color: black;
+}
+
+.create a {
+  
+  font-family: 'Montserrat', sans-serif;
+  padding: 5px 10px;
+  position: relative;
+  cursor: pointer;
+  color: var(--white);
+  z-index: 1;
+  color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  background-color: #bd4e04;
+  text-decoration: none;
+  
+  &:after {
+        
+    content: '';
+    background: var(--white);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    clip-path: circle(0% at 50% 50%);
+    transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+    z-index: -1;
+    border-radius: 0.5rem;
+  }
+    
+  &:hover {
+      
+    &:after {
+
+      clip-path: circle(100% at 50% 50%);
+      transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 2s;
+    }
+  }
 }

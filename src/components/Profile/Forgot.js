@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { auth } from "../Firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import "./Profile.css"; // reuse the same CSS
+import "./Profile.css"; 
+import { Link } from "react-router-dom"; 
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleReset = async (e) => {
     e.preventDefault();
@@ -37,6 +36,9 @@ const Forgot = () => {
               Forgot your password?<br />
               Enter your email below and we’ll send you a link to reset it.
             </p>
+            <div className="create">
+    <Link to="/create"> Create Account </Link>
+  </div>
           </div>
         </div>
 
@@ -64,7 +66,7 @@ const Forgot = () => {
 
             <div className="forgot-password">
 
-            <a className="back-btn" href="/login"> ← Back to Login</a>
+            <Link className="back-btn" to="/"> ← Back to Login</Link>
               
             <button type="submit" className="next-btn">
               Send Reset Link

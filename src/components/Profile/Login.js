@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../Firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import "./Profile.css"; // reuse the same CSS for styling
 
 const Login = () => {
@@ -23,6 +25,16 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      navigate("/job");
+    }
+  });
+
+  return () => unsubscribe();
+},);
+
   return (
     <div className="profile-container">
       <div className="profile-content">
@@ -35,6 +47,9 @@ const Login = () => {
     towards your dream career opportunities.<br />
     Your skills + AI = Perfect match.
   </p>
+  <div className="create">
+<Link to="/create">New here? Create an account</Link>
+  </div>
 </div>
 
         </div>
@@ -76,7 +91,7 @@ const Login = () => {
               Login
             </button>
 
-            <a className="next-btn" href="/forgot"> Forgot Password? </a>
+            <Link className="next-btn" to="/forgot"> Forgot Password? </Link>
               
             </div>
           </form>
