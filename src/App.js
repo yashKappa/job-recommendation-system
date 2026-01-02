@@ -10,7 +10,7 @@ function App() {
     <Router basename="/job-recommendation-system">
       <Routes>
         <Route path="/create" element={<CreateProfile />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
 
         {/* 🔐 Protected Route */}

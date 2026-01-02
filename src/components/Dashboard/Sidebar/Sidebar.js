@@ -1,4 +1,6 @@
 import React from "react";
+import { auth } from "../../Firebase";
+import { signOut } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -15,9 +17,13 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.clear(); // or firebase signOut
-    navigate("/");
+const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login"); // redirect after logout
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
   };
 
   return (
