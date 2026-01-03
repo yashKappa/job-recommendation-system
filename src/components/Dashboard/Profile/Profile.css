@@ -1,5 +1,116 @@
 .profileData{
-    background-color: aliceblue;
-    margin: 30px;
-    padding: 20px;
+    margin-right: 2rem;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    color: #1f2937;
+}
+
+.profileData h2{
+    color: #1f2937;
+    font-size: 35px;
+}
+
+.profileHead {
+  margin: 40px auto;
+  padding: 30px;
+  background: #1f2937;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  display: flex;
+}
+
+.profileHead img{
+    width: 150px;   
+    border-radius: 10rem;
+    box-shadow: 0 10px 30px rgb(0, 0, 0);
+}
+
+.subData{
+    margin: 10px 0px 20px 50px;
+    border-radius: 0.3rem;
+    color: white;
+}
+
+.subData p{
+    padding: 8px 10px;
+}
+
+.subData strong{
+    color: #ff6600;
+}
+
+.profileSubData{
+/* background: #1f2937; */
+  border-radius: 16px;
+  box-shadow:inset 0 4px 10px #1f29376e;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+  padding: 30px;
+  margin-bottom: 2rem;
+  border: 5px solid #1f2937;
+}
+
+.profileSubData p{
+    padding: 10px;
+    color: #1f2937;
+}
+
+.profileSubData Strong{
+    color: #ff6600;
+}
+
+.profileData h3{
+    color: #1f2937;
+}
+
+.profileSubData a{
+    text-decoration: none;
+    color: #ff6600;
+    font-weight: bold;
+}
+
+.profileSubData a:hover{
+    text-decoration: underline;
+    color: #1f2937;
+}
+
+.profileSubData .links{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.profileSubData img{
+    width: 30px;
+}
+
+.profileSubData img:hover{
+    transform: scale(1.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.linkImg {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.resume {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background-color: #1f2937;
+  color: #ff6600;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
 }

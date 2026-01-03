@@ -5,6 +5,7 @@ import Job from "./components/Dashboard/Job";
 import Forgot from "./components/Profile/Forgot";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Dashboard/Profile/Porfile";
+import Sidebar from "./components/Dashboard/Sidebar/Sidebar";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/sidebar" element={<Sidebar />} />
 
         {/* 🔐 Protected Route */}
         <Route

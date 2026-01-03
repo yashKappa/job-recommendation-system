@@ -43,15 +43,15 @@
   color: white;
 }
 
-.side-item:hover {
+.side-item:hover,.side-item.active {
   background: #1f4a72;
 }
 
-.side-item.active {
-  background: #eff6ff;
-  color: #eb6425;
+/* .side-item.active {
+  background: #d34401;
+  color: #eff6ff;
   font-weight: 500;
-}
+} */
 
 /* Logout specific */
 .side-logout {
@@ -67,3 +67,4 @@
 .job{
   margin-left: 8rem;
 }
+

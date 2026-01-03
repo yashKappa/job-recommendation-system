@@ -42,11 +42,10 @@ const Profile = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
-            <div>
+        <div className="profileData">
                 <h2>My Profile</h2>
 
-                <div>
+                <div className="profileHead">
                     {profile.profileImageURL ? (
                         <div>
                             <img
@@ -59,41 +58,52 @@ const Profile = () => {
                     ) : (
                         <div className="profile-placeholder">No Image</div>
                     )}
-
-                    <p>{profile.summary}</p>
+                    <div className="subData">
+                    <p><strong>Summary: </strong>{profile.summary}</p>
                     <p><strong>Name:</strong> {profile.basicDetails.fullName}</p>
                     <p><strong>Email:</strong> {profile.basicDetails.email}</p>
+                    </div>
                 </div>
+
+            <div className="profileSubData">
+            <h3>Education</h3>
+            <p><strong>Degree: </strong>{profile.education.degree}</p>
+            <p><strong>College: </strong>{profile.education.college}</p>
+            <p><strong>Passing Year:</strong>{profile.education.year}</p>
             </div>
 
-            <p><strong>Skills:</strong> {profile.basicDetails.skills}</p>
-
-            <h3>Education</h3>
-            <p>{profile.education.degree}</p>
-            <p>{profile.education.college}</p>
-            <p>{profile.education.year}</p>
-
+            <div className="profileSubData">
             <h3>Experience</h3>
             <p>{profile.experience.type}</p>
-
+            <p><strong>Skills: </strong> {profile.basicDetails.skills}</p>
+            </div>
+            
+            <div className="profileSubData">
             <h3>Job Preferences</h3>
-            <p>Role: {profile.jobPreferences.role}</p>
-            <p>Work Mode: {profile.jobPreferences.workMode}</p>
-            <p>Availability: {profile.jobPreferences.interviewAvailability}</p>
-            <p>Notice Period: {profile.jobPreferences.noticePeriod}</p>
+            <p><strong>Role: </strong> {profile.jobPreferences.role}</p>
+            <p><strong>Work mode: </strong> {profile.jobPreferences.workMode}</p>
+            <p><strong>Availability: </strong> {profile.jobPreferences.interviewAvailability}</p>
+            <p><strong>Notice Period: </strong> {profile.jobPreferences.noticePeriod}</p>
+            </div>
 
+            <div className="profileSubData">
             <h3>Location Flexibility</h3>
-            <p>Location: {profile.locationFlexibility.preferredLocations}</p>
-            <p>Relocate: {profile.locationFlexibility.relocate}</p>
+            <p><strong>Location: </strong>{profile.locationFlexibility.preferredLocations}</p>
+            <p><strong>Relocate: </strong> {profile.locationFlexibility.relocate}</p>
+            </div>
 
+            <div className="profileSubData">
             <h3>Social Link</h3>
-            <p>Github: <a href="{profile.socialLinks.github}">{profile.socialLinks.github}</a></p>
-            <p>Kaggle: <a href="{profile.socialLinks.kaggle}">{profile.socialLinks.kaggle}</a></p>
-            <p>Linkedin: <a href="{profile.socialLinks.linkedin}">{profile.socialLinks.linkedin}</a></p>
-            <p>Portfolio: <a href="{profile.socialLinks.portfolio}">{profile.socialLinks.portfolio}</a></p>
+            <div className="links">
+            <p><div className="linkImg"><img src={`${process.env.PUBLIC_URL}/assets/github.png`} alt="rocket" /></div><div><a href="{profile.socialLinks.github}"> Github</a></div></p>
+            <p><div className="linkImg"><img src={`${process.env.PUBLIC_URL}/assets/linkedin.png`} alt="rocket" /></div><div><a href="{profile.socialLinks.linkedin}"> linkedin</a></div></p>
+            <p><div className="linkImg"><img src={`${process.env.PUBLIC_URL}/assets/facebook.png`} alt="rocket" /></div><div><a href="{profile.socialLinks.kaggle}"> facebook</a></div></p>
+            <p><div className="linkImg"><img src={`${process.env.PUBLIC_URL}/assets/briefcase.png`} alt="rocket" /></div><div><a href="{profile.socialLinks.portfolio}"> portfolio</a></div></p>
+            </div>
+            </div>
 
-            {profile.resumeURL && (
-                <a href={profile.resumeURL} target="_blank" rel="noreferrer">
+             {profile.resumeURL && (
+                <a className="resume" href={profile.resumeURL} target="_blank" rel="noreferrer">
                     View Resume
                 </a>
             )}
