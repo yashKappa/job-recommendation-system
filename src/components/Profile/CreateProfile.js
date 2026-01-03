@@ -12,6 +12,7 @@ const CreateProfile = () => {
   const [experienceType, setExperienceType] = useState("experienced");
   const [summary, setSummary] = useState("");
   const [resume, setResume] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -66,33 +67,60 @@ const handleSubmit = async () => {
     const userId = userCredential.user.uid;
 
     // 2️⃣ Supabase Resume Upload
-    let resumeURL = "";
-    if (resume) {
-      const sanitizedFileName = resume.name.replace(/\s/g, "_");
-      const filePath = `${userId}/${Date.now()}_${sanitizedFileName}`;
+let resumeURL = "";
+let profileImageURL = "";
 
-      const { error: uploadError } = await supabase.storage.from("resume").upload(filePath, resume);
-      if (uploadError) throw uploadError;
+/* ===== RESUME UPLOAD ===== */
+if (resume) {
+  const sanitizedFileName = resume.name.replace(/\s/g, "_");
+  const resumePath = `${userId}/resume_${Date.now()}_${sanitizedFileName}`;
 
-      const { data: publicData, error: publicError } = supabase.storage.from("resume").getPublicUrl(filePath);
-      if (publicError) throw publicError;
+  const { error: resumeUploadError } = await supabase.storage
+    .from("resume")
+    .upload(resumePath, resume);
 
-      resumeURL = publicData.publicUrl;
-    }
+  if (resumeUploadError) throw resumeUploadError;
+
+  const { data } = supabase.storage
+    .from("resume")
+    .getPublicUrl(resumePath);
+
+  resumeURL = data.publicUrl;
+}
+
+/* ===== PROFILE IMAGE UPLOAD ===== */
+if (profileImage) {
+  const sanitizedFileName = profileImage.name.replace(/\s/g, "_");
+  const imagePath = `${userId}/profile_${Date.now()}_${sanitizedFileName}`;
+
+  const { error: imageUploadError } = await supabase.storage
+    .from("resume")
+    .upload(imagePath, profileImage);
+
+  if (imageUploadError) throw imageUploadError;
+
+  const { data } = supabase.storage
+    .from("resume")
+    .getPublicUrl(imagePath);
+
+  profileImageURL = data.publicUrl;
+}
 
     // 3️⃣ Firestore Save
     await setDoc(doc(db, "users", userId), {
-      basicDetails: { fullName, email, skills },
-      education,
-      jobPreferences,
-      locationFlexibility,
-      experience: { type: experienceType },
-      socialLinks,
-      summary,
-      softSkills,
-      resumeURL,
-      createdAt: serverTimestamp(),
-    });
+  basicDetails: { fullName, email, skills },
+  education,
+  jobPreferences,
+  locationFlexibility,
+  experience: { type: experienceType },
+  socialLinks,
+  summary,
+  softSkills,
+  resumeURL,
+  profileImageURL,
+  createdAt: serverTimestamp(),
+});
+
 
     navigate("/login");
 
@@ -615,17 +643,30 @@ const handleSubmit = async () => {
               <div className="form-group">
               </div>
 
-              <div className="form-group">
-                <input
-                  type="file"
-                  id="resume"
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => setResume(e.target.files[0])}
-                />
-                <label htmlFor="resume" className="file-label">
-                  {resume ? resume.name : "Upload Resume / CV"}
-                </label>
-              </div>
+             <div className="form-group">
+  <input
+    type="file"
+    id="resume"
+    accept=".pdf,.doc,.docx"
+    onChange={(e) => setResume(e.target.files[0])}
+  />
+  <label htmlFor="resume" className="file-label">
+    {resume ? resume.name : "Upload Resume / CV"}
+  </label>
+</div>
+
+<div className="form-group">
+  <input
+    type="file"
+    id="profileImage"
+    accept=".png,.jpg,.jpeg,.svg"
+    onChange={(e) => setProfileImage(e.target.files[0])}
+  />
+  <label htmlFor="profileImage" className="file-label">
+    {profileImage ? profileImage.name : "Upload Profile Photo"}
+  </label>
+</div>
+
 
               <div className="button-row">
                 <button className="back-btn" onClick={() => setStep(5)}>
@@ -639,7 +680,9 @@ const handleSubmit = async () => {
             </>
           )}
 
-
+ <div className="create-btn">
+<Link to="/">Already have an account? Sign in</Link>
+  </div>
         </div>
       </div>
     </div>

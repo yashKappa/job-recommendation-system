@@ -4,6 +4,7 @@ import Login from "./components/Profile/Login";
 import Job from "./components/Dashboard/Job";
 import Forgot from "./components/Profile/Forgot";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./components/Dashboard/Profile/Porfile";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <Routes>
         <Route path="/create" element={<CreateProfile />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* 🔐 Protected Route */}
         <Route

@@ -1,18 +1,10 @@
 import React from "react";
 import { auth } from "../../Firebase";
 import { signOut } from "firebase/auth";
-import { NavLink, useNavigate } from "react-router-dom";
-import {
-  FaHome,
-  FaUser,
-  FaBriefcase,
-  FaCheckCircle,
-  FaComments,
-  FaCompass,
-  FaBox,
-  FaSignOutAlt
-} from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaHome, FaUser,FaBriefcase, FaCheckCircle, FaSignOutAlt } from "react-icons/fa";
 import "./Sidebar.css";
+import Profile from "../Profile/Porfile";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -27,51 +19,43 @@ const handleLogout = async () => {
   };
 
   return (
-    <aside className="wf-sidebar">
-      {/* Top menu */}
-      <div className="wf-menu">
-        <NavLink to="/home" className="wf-item">
+    <div>
+          <aside className="side-sidebar">
+      <div className="side-menu">
+        <span>
+            <img src={`${process.env.PUBLIC_URL}/assets/logo1.png`} alt="rocket" />
+        </span>
+        <Link to="/home" className="side-item">
           <FaHome />
           <span>Home</span>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/profile" className="wf-item">
+        <Link to="/profile" className="side-item">
           <FaUser />
           <span>Profile</span>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/jobs" className="wf-item">
+        <Link to="/jobs" className="side-item">
           <FaBriefcase />
           <span>Jobs</span>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/applied" className="wf-item">
+        <Link to="/applied" className="side-item">
           <FaCheckCircle />
           <span>Applied</span>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/messages" className="wf-item">
-          <FaComments />
-          <span>Messages</span>
-        </NavLink>
-
-        <NavLink to="/discover" className="wf-item">
-          <FaCompass />
-          <span>Discover</span>
-        </NavLink>
-
-        <NavLink to="/on-demand" className="wf-item">
-          <FaBox />
-          <span>On-Demand</span>
-        </NavLink>
       </div>
 
-      {/* Bottom logout */}
-      <button className="wf-item wf-logout" onClick={handleLogout}>
+      <button className="side-item side-logout" onClick={handleLogout}>
         <FaSignOutAlt />
         <span>Logout</span>
       </button>
     </aside>
+    <div className="job">
+            <Profile />
+    </div>
+    </div>
   );
 };
 

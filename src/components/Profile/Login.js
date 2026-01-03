@@ -94,6 +94,9 @@ const Login = () => {
             <Link className="next-btn" to="/forgot"> Forgot Password? </Link>
               
             </div>
+            <div className="create-btn">
+                <Link to="/create"> Create Account </Link>
+              </div>
           </form>
         </div>
       </div>

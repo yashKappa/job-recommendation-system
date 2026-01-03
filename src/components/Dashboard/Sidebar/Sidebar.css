@@ -1,7 +1,7 @@
-.wf-sidebar {
-  width: 80px;
+.side-sidebar {
+  width: 90px;
   height: 100vh;
-  background: #ffffff;
+  background: #0f2a44;
   border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
@@ -13,13 +13,13 @@
   top: 0;
 }
 
-.wf-menu {
+.side-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.wf-item {
+.side-item {
   width: 64px;
   height: 64px;
   margin-bottom: 12px;
@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #6b7280;
+  color: #dbdbdb;
   font-size: 11px;
   background: none;
   border: none;
@@ -37,23 +37,33 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.wf-item svg {
+.side-item svg {
   font-size: 20px;
   margin-bottom: 4px;
+  color: white;
 }
 
-.wf-item:hover {
-  background: #f3f4f6;
-  color: #0c2b64;
+.side-item:hover {
+  background: #1f4a72;
 }
 
-.wf-item.active {
+.side-item.active {
   background: #eff6ff;
   color: #eb6425;
   font-weight: 500;
 }
 
 /* Logout specific */
-.wf-logout {
+.side-logout {
   margin-bottom: 25px;
+}
+
+.side-menu img{
+  width: 80px;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+}
+
+.job{
+  margin-left: 8rem;
 }

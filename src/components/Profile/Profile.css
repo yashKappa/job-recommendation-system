@@ -315,78 +315,8 @@ textarea {
   text-align: center;
 }
 
-
-/* ===== Tablet & Mobile Responsive ===== */
-@media (max-width: 1024px) {
-  .profile-container {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .profile-content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .data {
-    margin-bottom: 20px;
-  }
-
-  .profile-card {
-    width: 90%;
-    padding: 20px;
-  }
-
-  .row {
-    flex-direction: column;
-  }
-
-  .form-group {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-
-  /* Progress bar smaller text */
-  .progress-text {
-    font-size: 0.9rem;
-  }
-}
-
-/* ===== Mobile (Phones) ===== */
-@media (max-width: 768px) {
-  /* Hide startup image */
-  .data {
-    display: none;
-  }
-
-  .profile-card {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .skills {
-    flex-direction: column;
-  }
-
-  .skills label {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-.error-text {
-  color: #e63946;
-  font-size: 12px;
-  margin-top: 4px;
-  display: block;
-}
-
-
-  .eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+.create-btn{
+display: block;
 }
 
 /* Make file input label responsive */
@@ -426,6 +356,11 @@ textarea {
       color: black;
 }
 
+.create-btn{
+display: none;
+}
+
+
 .create a {
   
   font-family: 'Montserrat', sans-serif;
@@ -464,3 +399,99 @@ textarea {
     }
   }
 }
+
+
+
+/* ===== Tablet & Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .profile-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .data {
+    margin-bottom: 20px;
+  }
+
+  .profile-card {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .form-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  /* Progress bar smaller text */
+  .progress-text {
+    font-size: 0.9rem;
+  }
+
+
+}
+
+/* ===== Mobile (Phones) ===== */
+@media (max-width: 768px) {
+  /* Hide startup image */
+  .data {
+    display: none;
+  }
+
+  .profile-card {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .skills {
+    flex-direction: column;
+  }
+
+  .skills label {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+.error-text {
+  color: #e63946;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+ .create-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .create-btn a {
+    background-color: #051f41;
+    padding: 8px 10px;
+    border-radius: 0.3rem;
+    color: white;
+    text-decoration: none;
+    width: 50%;
+    text-align: center;
+  }
+
+}
+

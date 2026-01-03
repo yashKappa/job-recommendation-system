@@ -3,6 +3,7 @@ import React from "react";
 // import { signOut } from "firebase/auth";
 // import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
+import "./job.css"
 
 const Job = () => {
   // const navigate = useNavigate();
@@ -17,23 +18,8 @@ const Job = () => {
   // };
 
   return (
-    <div style={{ padding: "20px" }}>
-
+    <div className="main-content">
       <Sidebar />
-{/* 
-      <button
-        onClick={handleLogout}
-        style={{
-          padding: "10px 20px",
-          background: "#ff4d4f",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button> */}
     </div>
   );
 };

@@ -73,6 +73,9 @@ const Forgot = () => {
             </button>
 
             </div>
+            <div className="create-btn">
+    <Link to="/create"> Create Account </Link>
+  </div>  
           </form>
         </div>
       </div>
