@@ -22,9 +22,7 @@ const handleLogout = async () => {
     <div>
           <aside className="side-sidebar">
       <div className="side-menu">
-        <span>
-            <img src={`${process.env.PUBLIC_URL}/assets/logo1.png`} alt="rocket" />
-        </span>
+              <img src={`${process.env.PUBLIC_URL}/assets/logo1.png`} alt="rocket" />
         <Link to="/home" className="side-item">
           <FaHome />
           <span>Home</span>
