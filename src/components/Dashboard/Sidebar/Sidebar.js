@@ -54,7 +54,7 @@ const Sidebar = () => {
         <div className="side-menu">
           <span>
             <img
-              src={`${process.env.PUBLIC_URL}/assets/logo1.png`}
+              src={`${process.env.PUBLIC_URL}/assets/Logo1.png`}
               alt="logo"
             />
           </span>

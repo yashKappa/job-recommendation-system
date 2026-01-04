@@ -49,7 +49,7 @@ const Profile = () => {
                     {profile.profileImageURL ? (
                         <div>
                             <img
-                                src={profile.profileImageURL} // Supabase URL
+                                src={profile.profileImageURL}
                                 alt="Profile"
                                 className="profile-img"
                             />

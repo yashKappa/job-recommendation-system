@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Dashboard/Profile/Porfile";
 import Sidebar from "./components/Dashboard/Sidebar/Sidebar";
 
+
 function App() {
   return (
     <Router basename="/job-recommendation-system">
