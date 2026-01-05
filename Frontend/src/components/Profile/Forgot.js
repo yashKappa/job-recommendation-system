@@ -27,7 +27,7 @@ const Forgot = () => {
     <div className="profile-container">
       <div className="profile-content">
         <div className="data">
-          <div className="img">
+          <div className="img forgot-logo">
             <img
               src={`${process.env.PUBLIC_URL}/assets/forgot.svg`}
               alt="flaticorn"

@@ -1,0 +1,106 @@
+Sure! Let’s break this down carefully. I’ll explain **technologies used** in your project and the **purpose of each file** you shared. I’ll also point out how they interact.
+
+---
+
+## **1. Technologies Used**
+
+Your project is a **Resume Analysis Web App**. Here’s what it uses:
+
+### **Backend (Python + Flask)**
+
+* **Flask** → Python web framework for creating APIs.
+* **Flask-CORS** → Allows cross-origin requests from frontend (React).
+* **pdfplumber** → For extracting text from PDF resumes.
+* **python-docx (docx)** → For extracting text from DOCX resumes.
+* **re (Regex)** → For pattern matching, email extraction, skill detection.
+* **Spacy** → NLP library for parsing text, extracting nouns and keywords.
+* **wordsegment** → Splitting merged words like `machinelearning` → `machine learning`.
+* **requests** → Fetch resume files from remote URLs.
+* **OS module** → For file handling (deleting temporary files).
+
+---
+
+### **Frontend (React)**
+
+* **React** → JavaScript framework for building the UI.
+* **Firebase (Auth + Firestore)** → User authentication and storing resume URLs.
+* **Fetch API** → Call Flask API for resume analysis.
+* **CSS** → Styling.
+* **PDF & Image Rendering** → `<embed>` for PDFs, `<img>` for images.
+
+---
+
+### **Data & Storage**
+
+* **skills.json** → List of all skills the parser will match against.
+* **Firestore (Firebase Database)** → Stores user data, including uploaded resume URLs.
+* **Resume files** → PDFs, DOCX, or images stored in Firebase (or other storage).
+
+---
+
+## **2. Purpose of Each File**
+
+| File                   | Technology                  | Purpose                                                                                                                                                                              |
+| ---------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **app.py**             | Flask                       | Backend API. Accepts `POST` requests with resume URL, downloads the file, extracts text, analyzes it, and returns JSON with skills, email, and keywords.                             |
+| **resume_parser.py**   | Python (pdfplumber, docx)   | Extracts plain text from uploaded resumes. Handles PDFs and DOCX files.                                                                                                              |
+| **resume_analyzer.py** | Python (Spacy, regex)       | Analyzes extracted resume text: normalizes text, detects skills from `skills.json`, extracts email and top 20 keywords. Uses regex to avoid false positives (e.g., `c` vs `oracle`). |
+| **text_cleaner.py**    | Python (wordsegment, regex) | Cleans text: removes symbols, splits merged words like `machinelearning` → `machine learning`. Helps `resume_analyzer` match skills properly.                                        |
+| **Jobs.js**            | React + Firebase            | Frontend component:                                                                                                                                                                  |
+
+1. Fetches user resume URL from Firebase.
+2. Shows a preview (PDF/Image).
+3. Calls `/analyze-resume` API.
+4. Displays results: email, skills, experience, keywords. |
+   | **Jobs.css** | CSS | Styling for `Jobs.js` component (buttons, resume box, layout). |
+   | **skills.json** | JSON | Contains all the skills to detect in resumes. Used by `resume_analyzer.py`. |
+
+---
+
+## **3. How It Works (Flow)**
+
+1. **Frontend (React)**
+
+   * User logs in → Resume URL fetched from Firebase → Displayed on page.
+   * User clicks "Analyze Resume" → Sends URL to Flask backend API `/analyze-resume`.
+
+2. **Backend (Flask)**
+
+   * Downloads resume from URL.
+   * Calls `resume_parser.extract_text` → gets plain text from PDF/DOCX.
+   * Calls `resume_analyzer.analyze_resume` → returns:
+
+     * **Email**
+     * **Skills** (matched from `skills.json`)
+     * **Keywords** (top 20 nouns/proper nouns)
+   * Returns JSON response to frontend.
+
+3. **Frontend**
+
+   * Receives JSON → Displays analysis in the UI.
+
+---
+
+## **4. Notes / Observations**
+
+* `resume_analyzer.py` now uses **regex with word boundaries** to avoid false positives like detecting `c` inside `oracle`.
+* `text_cleaner.py` ensures long merged words are split, which improves skill matching.
+* Frontend currently supports **PDF and image resumes**, but not DOCX in preview (though backend can process DOCX).
+* Skills detection depends on `skills.json`. If a skill in resume isn’t in `skills.json`, it won’t show up.
+* Experience extraction is not yet fully implemented; currently placeholder as `Fresher`.
+
+---
+
+✅ **Summary**
+
+* **Frontend** → React, Firebase (UI, Auth, Firestore, Fetch API)
+* **Backend** → Flask + Python libraries (NLP, PDF/DOCX parsing, regex)
+* **Text Processing** → Spacy + Regex + Wordsegment
+* **Storage** → Firebase (resume URL), local temp file for processing
+* **Skills Matching** → `skills.json` + regex
+
+---
+
+If you want, I can **draw a diagram showing the full flow** from **user → React → Flask → NLP → Firebase → back to React**, which makes it visually easier to understand how everything works together.
+
+Do you want me to do that?
