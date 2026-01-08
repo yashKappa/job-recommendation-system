@@ -354,6 +354,10 @@
   background-color: #ffffff00;
 }
 
+.jobSaved{
+  padding-right: 2rem;
+}
+
 .saved{
   padding: 0rem 1.5rem 2rem;
 }
@@ -446,6 +450,11 @@
   .empty-jobs img,
   .empty-analysis img {
     width: 200px;
+  }
+  
+  .jobSaved{
+        padding-right: 0rem;
+
   }
 }
 
