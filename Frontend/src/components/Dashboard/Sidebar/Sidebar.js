@@ -51,7 +51,7 @@ const Sidebar = () => {
       {/* ===== MOBILE TOP NAV ===== */}
       <header className="mobile-topbar">
         <img
-          src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+          src={`${process.env.PUBLIC_URL}/assets/Logo.png`}
           alt="logo"
         />
         <button onClick={handleLogout}>
