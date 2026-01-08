@@ -50,8 +50,8 @@ const Saved = () => {
   if (loading) return <p className="load">Loading saved jobs...</p>;
 
   return (
-    <div className="SavedContent">
-      <h2>Saved Jobs</h2>
+    <div className="jobSaved">
+    <div className="Matching-Job">
 
       {savedJobs.length === 0 ? (
         <div className="empty-jobs">
@@ -63,6 +63,7 @@ const Saved = () => {
         </div>
       ) : (
         <div className="jobs-box">
+                  <h3>Saved Jobs</h3>
           <div className="job-results">
             {savedJobs.map((job) => (
               <div key={job.id} className="job-card">
@@ -78,7 +79,6 @@ const Saved = () => {
                     href={job.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="apply-btn"
                   >
                     Apply Now ↗
                   </a>
@@ -95,6 +95,7 @@ const Saved = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

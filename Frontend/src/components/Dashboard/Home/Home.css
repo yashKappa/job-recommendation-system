@@ -94,4 +94,20 @@
   .stat-card p {
     font-size: 24px;
   }
+/* ===== TABLE WRAPPER (IMPORTANT) ===== */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+}
+
+/* ===== JOBS TABLE ===== */
+.jobs-table {
+  width: 100%;
+  min-width: 700px; /* forces scroll instead of breaking */
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
 }

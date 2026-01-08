@@ -19,12 +19,10 @@ import Saved from "../Saved/Saved";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  // ✅ sessionStorage = survives refresh, dies on tab close
   const [activePage, setActivePage] = useState(() => {
     return sessionStorage.getItem("activePage") || "home";
   });
 
-  // ✅ Persist per tab session
   useEffect(() => {
     sessionStorage.setItem("activePage", activePage);
   }, [activePage]);
@@ -50,46 +48,29 @@ const Sidebar = () => {
 
   return (
     <div className="layout">
+      {/* ===== MOBILE TOP NAV ===== */}
+      <header className="mobile-topbar">
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+          alt="logo"
+        />
+        <button onClick={handleLogout}>
+          <FaSignOutAlt />
+        </button>
+      </header>
+
+      {/* ===== DESKTOP SIDEBAR ===== */}
       <aside className="side-sidebar">
         <div className="side-menu">
-          <span>
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/Logo1.png`}
-              alt="logo"
-            />
-          </span>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/Logo1.png`}
+            alt="logo"
+          />
 
-          <button
-            className={`side-item ${activePage === "home" ? "active" : ""}`}
-            onClick={() => setActivePage("home")}
-          >
-            <FaHome />
-            <span>Home</span>
-          </button>
-
-          <button
-            className={`side-item ${activePage === "profile" ? "active" : ""}`}
-            onClick={() => setActivePage("profile")}
-          >
-            <FaUser />
-            <span>Profile</span>
-          </button>
-
-          <button
-            className={`side-item ${activePage === "jobs" ? "active" : ""}`}
-            onClick={() => setActivePage("jobs")}
-          >
-            <FaBriefcase />
-            <span>Jobs</span>
-          </button>
-
-          <button
-            className={`side-item ${activePage === "applied" ? "active" : ""}`}
-            onClick={() => setActivePage("applied")}
-          >
-            <FaCheckCircle />
-            <span>Applied</span>
-          </button>
+          <SidebarButton icon={<FaHome />} label="Home" page="home" activePage={activePage} setActivePage={setActivePage} />
+          <SidebarButton icon={<FaUser />} label="Profile" page="profile" activePage={activePage} setActivePage={setActivePage} />
+          <SidebarButton icon={<FaBriefcase />} label="Jobs" page="jobs" activePage={activePage} setActivePage={setActivePage} />
+          <SidebarButton icon={<FaCheckCircle />} label="Applied" page="applied" activePage={activePage} setActivePage={setActivePage} />
         </div>
 
         <button className="side-item side-logout" onClick={handleLogout}>
@@ -98,9 +79,37 @@ const Sidebar = () => {
         </button>
       </aside>
 
+      {/* ===== MAIN CONTENT ===== */}
       <main className="job">{renderComponent()}</main>
+
+      {/* ===== MOBILE BOTTOM NAV ===== */}
+      <nav className="mobile-bottom-nav">
+        <BottomNavButton icon={<FaHome />} page="home" activePage={activePage} setActivePage={setActivePage} />
+        <BottomNavButton icon={<FaUser />} page="profile" activePage={activePage} setActivePage={setActivePage} />
+        <BottomNavButton icon={<FaBriefcase />} page="jobs" activePage={activePage} setActivePage={setActivePage} />
+        <BottomNavButton icon={<FaCheckCircle />} page="applied" activePage={activePage} setActivePage={setActivePage} />
+      </nav>
     </div>
   );
 };
+
+const SidebarButton = ({ icon, label, page, activePage, setActivePage }) => (
+  <button
+    className={`side-item ${activePage === page ? "active" : ""}`}
+    onClick={() => setActivePage(page)}
+  >
+    {icon}
+    <span>{label}</span>
+  </button>
+);
+
+const BottomNavButton = ({ icon, page, activePage, setActivePage }) => (
+  <button
+    className={`bottom-item ${activePage === page ? "active" : ""}`}
+    onClick={() => setActivePage(page)}
+  >
+    {icon}
+  </button>
+);
 
 export default Sidebar;

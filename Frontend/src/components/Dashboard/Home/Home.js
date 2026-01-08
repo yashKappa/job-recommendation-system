@@ -107,6 +107,7 @@ const AnalyticsDashboard = () => {
       {/* ===== APPLIED JOBS TABLE ===== */}
       <div className="chart-card full-width">
         <h3>📄 Applied Jobs</h3>
+        <div className="table-wrapper">
         <table className="jobs-table">
           <thead>
             <tr>
@@ -138,6 +139,7 @@ const AnalyticsDashboard = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
