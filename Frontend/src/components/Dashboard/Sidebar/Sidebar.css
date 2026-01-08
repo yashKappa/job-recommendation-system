@@ -1,16 +1,19 @@
+/* Sidebar base */
 .side-sidebar {
   width: 90px;
   height: 100vh;
-  background: #0f2a44;
+  background: #0f2a44; /* Navy blue */
   border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 🔥 key */
+  justify-content: space-between;
   align-items: center;
   padding: 16px 0;
   position: fixed;
   left: 0;
   top: 0;
+  transition: width 0.3s ease;
+  z-index: 1000;
 }
 
 .side-menu {
@@ -34,7 +37,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .side-item svg {
@@ -43,28 +46,116 @@
   color: white;
 }
 
-.side-item:hover,.side-item.active {
+.side-item:hover,
+.side-item.active {
   background: #1f4a72;
+  color: #fff;
 }
 
-/* .side-item.active {
-  background: #d34401;
-  color: #eff6ff;
-  font-weight: 500;
-} */
-
-/* Logout specific */
+/* Logout */
 .side-logout {
   margin-bottom: 25px;
 }
 
-.side-menu img{
+/* Logo */
+.side-menu img {
   width: 80px;
   margin-bottom: 3rem;
   margin-top: 1rem;
 }
 
-.job{
+/* Main content shift */
+.job {
   margin-left: 8rem;
+  transition: margin-left 0.3s ease;
 }
 
+/* ----- Responsive Styles ----- */
+
+/* Medium screens: tablets */
+@media (max-width: 1024px) {
+  .side-sidebar {
+    width: 70px;
+  }
+
+  .side-item {
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+  }
+
+  .side-item svg {
+    font-size: 18px;
+  }
+
+  .job {
+    margin-left: 6rem;
+  }
+
+  .side-menu img {
+    width: 60px;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Small screens: mobile */
+@media (max-width: 768px) {
+  .side-sidebar {
+    width: 60px;
+    flex-direction: row;
+    height: auto;
+    padding: 8px 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    border-right: none;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .side-menu {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .side-item {
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+
+  .side-item svg {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+
+  .job {
+    margin-left: 0;
+    margin-bottom: 60px; /* bottom sidebar height */
+  }
+
+  .side-menu img {
+    display: none; /* hide logo on mobile */
+  }
+
+  .side-logout {
+    display: none; /* hide logout button on mobile (optional) */
+  }
+}
+
+/* Extra small screens (phones) */
+@media (max-width: 480px) {
+  .side-sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .job {
+    margin-left: 0;
+    margin-bottom: 60px;
+  }
+}

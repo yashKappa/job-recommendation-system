@@ -1,147 +1,178 @@
 import React, { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, increment, serverTimestamp } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../Firebase";
+import JobResults from "./jobService";
 import "./Jobs.css";
 
 const Jobs = () => {
   const [resumeURL, setResumeURL] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [analysis, setAnalysis] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
+  const [analysis, setAnalysis] = useState(null);
+  const [jobs, setJobs] = useState([]);
 
+  /* ------------------ LOAD LOCAL DATA ------------------ */
+  useEffect(() => {
+    const a = localStorage.getItem("resumeAnalysis");
+    const j = localStorage.getItem("recommendedJobs");
+
+    if (a) setAnalysis(JSON.parse(a));
+    if (j) setJobs(JSON.parse(j));
+  }, []);
+
+  /* ------------------ AUTH ------------------ */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        await fetchResume(user.uid);
-      } else {
+      if (!user) {
         setResumeURL(null);
+        setLoading(false);
+
+        // clear only your keys
+        localStorage.removeItem("resumeAnalysis");
+        localStorage.removeItem("recommendedJobs");
+
+        return;
+      }
+
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) {
+          setResumeURL(snap.data().resumeURL || null);
+        }
+      } catch (err) {
+        console.error("Resume fetch error:", err);
+      } finally {
         setLoading(false);
       }
     });
+
     return () => unsubscribe();
   }, []);
 
-  const fetchResume = async (uid) => {
-    try {
-      const snap = await getDoc(doc(db, "users", uid));
-      if (snap.exists()) {
-        setResumeURL(snap.data().resumeURL);
-      }
-    } catch (err) {
-      console.error("Error fetching resume:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  /* ------------------ ANALYZE RESUME ------------------ */
   const analyzeResume = async () => {
+    if (!resumeURL || !auth.currentUser) return;
+
+    setAnalyzing(true);
+    setAnalysis(null);
+    setJobs([]);
+
+    // clear only analysis data
+    localStorage.removeItem("resumeAnalysis");
+    localStorage.removeItem("recommendedJobs");
+
     try {
-      setAnalyzing(true);
-      const res = await fetch("http://localhost:5000/analyze-resume", {
+      const res = await fetch("http://127.0.0.1:5000/analyze-and-recommend", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resumeURL }),
       });
 
       const data = await res.json();
-      setAnalysis(data);
+
+      setAnalysis(data.analysis);
+      setJobs(data.jobs);
+
+      localStorage.setItem("resumeAnalysis", JSON.stringify(data.analysis));
+      localStorage.setItem("recommendedJobs", JSON.stringify(data.jobs));
+
+      await setDoc(
+        doc(db, "users", auth.currentUser.uid, "analytics", "jobStats"),
+        {
+          resumeAnalysisCount: increment(1),
+          jobsShownCount: data.jobs.length,
+          lastAnalyzedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
     } catch (err) {
-      console.error("Resume analysis failed:", err);
+      console.error("Analyze error:", err);
     } finally {
       setAnalyzing(false);
     }
   };
 
-  if (loading) return <p>Loading resume...</p>;
-  if (!resumeURL) return <p>No resume uploaded yet.</p>;
-
-  const fileExtension = resumeURL.split(".").pop().toLowerCase();
-
-  const renderFile = () => {
-    if (fileExtension === "pdf") {
-      return (
-        <embed
-          src={resumeURL}
-          type="application/pdf"
-          width="100%"
-          height="500px"
-          style={{ borderRadius: "8px" }}
-          className="resume-box"
-        />
-      );
-    }
-
-    if (["jpg", "jpeg", "png"].includes(fileExtension)) {
-      return (
-        <img
-          src={resumeURL}
-          alt="Resume"
-          style={{ width: "100%", borderRadius: "8px" }}
-        />
-      );
-    }
-
-    return (
-      <p>
-        Preview not available.{" "}
-        <a href={resumeURL} target="_blank" rel="noreferrer">
-          Download Resume
-        </a>
-      </p>
-    );
-  };
+  /* ------------------ UI ------------------ */
+  if (loading) return <p className="load">Loading...</p>;
+  if (!resumeURL) return <p className="load">No resume uploaded.</p>;
 
   return (
-    <div className="jobs-container">
-      <div className="resume-box">
-        {renderFile()}
+    <div className="jobContent">
+
+      <JobResults jobs={jobs} analysis={analysis} />
+
+      <div className="jobs-container">
+        <button
+          onClick={analyzeResume}
+          disabled={analyzing}
+          className="analyze-btn"
+        >
+          {analyzing ? "Analyzing..." : "Analyze Resume (AI)"}
+        </button>
+
+        {analyzing && (
+          <span className="Analyzing">
+            <img
+              src="https://media.tenor.com/6bLqzMcCDzEAAAAM/marmalady-loading-cat.gif"
+              alt="loading"
+            />
+          </span>
+        )}
+
+        {analysis ? (
+          <div className="analysis-box">
+            <h3>Resume Analysis</h3>
+
+            <div className="resumeData">
+              <p><strong>Skills:</strong></p>
+              <ul>
+                {analysis.skills?.length
+                  ? analysis.skills.map((s, i) => <li key={i}>{s}</li>)
+                  : <li>No skills detected</li>}
+              </ul>
+            </div>
+
+            <div className="resumeData">
+              <p><strong>Locations:</strong></p>
+              <ul>
+                {analysis.location?.length
+                  ? analysis.location.map((l, i) => <li key={i}>{l}</li>)
+                  : <li>No location detected</li>}
+              </ul>
+            </div>
+
+            <div className="resumeData">
+              <p><strong>Experience:</strong></p>
+              <ul>
+                {analysis.experience?.length
+                  ? analysis.experience.map((e, i) => <li key={i}>{e}</li>)
+                  : <li>Fresher</li>}
+              </ul>
+            </div>
+
+            <div className="resumeData">
+              <p><strong>Email:</strong> {analysis.email || "Not found"}</p>
+            </div>
+
+            <div className="resumeData">
+              <p><strong>Keywords:</strong></p>
+              <ul>
+                {analysis.keywords?.length
+                  ? analysis.keywords.map((k, i) => <li key={i}>{k}</li>)
+                  : <li>No keywords detected</li>}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="empty-analysis">
+            <img src={`${process.env.PUBLIC_URL}/assets/analysis.svg`} alt="Analyze" />
+            <p>
+              Click <strong>Analyze Resume</strong> to get job recommendations
+            </p>
+          </div>
+        )}
       </div>
-
-      <button
-        onClick={analyzeResume}
-        disabled={analyzing}
-        className="analyze-btn"
-      >
-        {analyzing ? "Analyzing..." : "Analyze Resume (AI)"}
-      </button>
-
-      {analysis && (
-        <div className="analysis-box">
-          <h3>Resume Analysis</h3>
-
-          <div className="resumeData">
-            <p><strong>Skills:</strong></p>
-          <ul>
-            {analysis.skills?.map((skill, i) => (
-              <li key={i}>{skill}</li>
-            ))}
-          </ul>
-          </div>
-
-          <div className="resumeData">
-            <p><strong>locations:</strong></p>
-          <ul>
-            {analysis.location?.map((locations, i) => (
-              <li key={i}>{locations}</li>
-            ))}
-          </ul>
-          </div>
-
-          <div className="resumeData">
-  <p><strong>Experience:</strong></p>
-  <ul>
-    {analysis.experience && analysis.experience.length > 0 ? (
-      analysis.experience.map((exp, i) => <li key={i}>{exp}</li>)
-    ) : (
-      <li>Fresher</li>
-    )}
-  </ul>
-</div>
-        </div>
-      )}
     </div>
   );
 };

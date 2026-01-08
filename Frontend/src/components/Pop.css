@@ -1,0 +1,51 @@
+.pop-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  z-index: 9999;
+  animation: slideFromTop 0.35s ease;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  padding: 8px 10px;
+  gap: 10px;
+}
+
+.pop-icon{
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+}
+
+.pop-container p{
+    color: white;
+}
+
+/* Types */
+.pop-container.success {
+  background-color: #0c3f61;
+}
+
+.pop-container.error {
+  background-color: #d32f2f;
+}
+
+.pop-container.info {
+  background-color: #1976d2;
+}
+
+/* Slide from TOP animation */
+@keyframes slideFromTop {
+  from {
+    transform: translate(-50%, -40px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}

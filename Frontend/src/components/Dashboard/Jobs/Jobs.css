@@ -7,13 +7,24 @@
 
 /* Container */
 .jobs-container {
-  max-width: 100%;
+  max-width: 25%;
   margin: 2rem 2rem 2rem 0rem;
   padding: 20px;
   background-color: #17214b; /* light background */
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.jobs-container::-webkit-scrollbar {
+  width: 0px;
+  overflow-y: auto;
+}
+
+.job-results::-webkit-scrollbar {
+  width: 0px;
 }
 
 /* Heading */
@@ -51,6 +62,12 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.5s ease-in-out;
+  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.analysis-box::-webkit-scrollbar {
+  width: 0px;
 }
 
 .analysis-box h3 {
@@ -65,21 +82,8 @@
   margin-bottom: 1rem;
 }
 
-.analysis-box li {
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
 /* Links */
-.analysis-box a {
-  color: #ff6600;
-  text-decoration: none;
-  font-weight: bold;
-}
 
-.analysis-box a:hover {
-  text-decoration: underline;
-}
 
 /* Loading / No Resume */
 .jobs-container p {
@@ -108,6 +112,10 @@
     white-space: nowrap; 
 }
 
+.jobContent{
+  display: flex;
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -131,4 +139,217 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.jobContent {
+  display: flex;
+  gap: 20px; /* space between left and right */
+  align-items: flex-start;
+}
+
+/* Left panel: jobs scrollable */
+.Matching-Job {
+  flex: 1;  /* take available width */
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  border-radius: 0.3rem;
+  margin-top: 2rem;
+  background-color: #17214b;
+}
+
+.empty-jobs {
+  flex: 1;  
+  height: 90vh;
+  overflow-y: auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  background-color: #ffffff;
+}
+
+.empty-jobs p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f13800;
+}
+
+.empty-jobs img {
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+/* Right panel: fixed analysis */
+.jobs-container {
+  flex: 0 0 400px; /* fixed width for analysis/resume */
+  max-height: 90vh;
+  position: sticky;
+  top: 20px; /* keeps it fixed when scrolling left panel */
+  background-color: #17214b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+}
+
+/* Keep analysis-box scrollable inside fixed container if needed */
+.analysis-box {
+  background-color: #ffffff;
+  border-left: 6px solid #c44f19;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+/* Scrollbar hidden for aesthetics */
+.Matching-Job::-webkit-scrollbar,
+.analysis-box::-webkit-scrollbar {
+  width: 0px;
+}
+
+
+.jobContent {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+
+.jobs-container {
+  flex: 0 0 400px; /* fixed width */
+  position: sticky;
+  top: 20px;
+  max-height: 90vh;
+  background-color: #17214b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Resume preview */
+.resume-box {
+  margin-bottom: 20px;
+}
+
+.analysis-box ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Jobs Box */
+.jobs-box {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+.job-results{
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.job-card {
+  background-color: #ffffff;
+  margin-bottom: 12px;
+  padding: 12px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.job-card h4, p{
+  margin: 0 0 8px 0;
+  color: #0e1e4b;
+}
+
+.job-card strong {
+  margin: 0 0 10px 0;
+  color: #dd5101;
+}
+
+.jobs-box h3 {
+  color: #042c68;
+}
+
+.card-data{
+  margin-bottom: 15px;
+}
+
+.job-results a {
+  text-decoration: none;
+  color: #ffffff;
+  background-color:#12377a;
+  padding: 5px 10px;
+  border-radius: 0.3rem;
+  border: 2px solid #ffffff00;
+}
+
+.job-results a:hover {
+  background-color: #0b2c61;
+}
+
+.empty-analysis img {
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+.empty-analysis {
+  color: #e75e0e;
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.Analyzing{
+    color: rgb(7, 0, 0);
+    font-weight: bold;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.336);
+    width: 100%;
+    left: 0%;
+    height: 110%;
+    top: -4%;
+    margin-top: -1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-btn {
+  padding: 8px 14px;
+  background: #d26319;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #a34712;
+}
+
+.job-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.SavedContent {
+  margin: 2rem 2rem 2rem 0rem;
+}
+
+.save{
+  border: 2px solid #cf5a0c;
+  background-color: white;
+  color: rgb(10, 25, 54);
+  font-weight: bold;
+}
+
+.save:hover{
+  background-color: #ffffff00;
 }

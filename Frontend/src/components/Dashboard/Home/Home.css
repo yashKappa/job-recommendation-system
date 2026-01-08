@@ -1,0 +1,97 @@
+
+
+/* ===== PAGE ===== */
+.analytics-page {
+  padding: 30px;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: #0f172a;
+}
+
+.analytics-page h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 25px;
+}
+
+/* ===== STATS GRID ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border-left: 6px solid #e65c00;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== JOBS TABLE ===== */
+.jobs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.jobs-table thead {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.jobs-table th,
+.jobs-table td {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.jobs-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.jobs-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.jobs-table a {
+  color: #f97316;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.jobs-table a:hover {
+  text-decoration: underline;
+}
+
+/* ===== TOOLTIP FIX ===== */
+.recharts-tooltip-wrapper {
+  font-size: 13px;
+}
+
+.chart-card, .chart-card{
+  background-color: #f1f1f194;
+  border-radius: 0.3rem;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.226);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .analytics-page {
+    padding: 18px;
+  }
+
+  .chart-card.full-width {
+    grid-column: span 1;
+  }
+
+  .stat-card p {
+    font-size: 24px;
+  }
+}

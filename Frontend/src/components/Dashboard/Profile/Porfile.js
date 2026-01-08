@@ -38,7 +38,7 @@ const Profile = () => {
         fetchProfile();
     }, []);
 
-    if (loading) return <p>Loading profile...</p>;
+    if (loading) return <p className="load">Loading profile...</p>;
     if (error) return <p>{error}</p>;
 
     return (
