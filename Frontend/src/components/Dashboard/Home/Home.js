@@ -42,7 +42,7 @@ const AnalyticsDashboard = () => {
     fetchStats();
   }, []);
 
-  if (!stats) return <p>Loading analytics...</p>;
+  if (!stats) return <p className="load">Loading analytics...</p>;
 
   /* ---------- DATA PROCESSING ---------- */
 

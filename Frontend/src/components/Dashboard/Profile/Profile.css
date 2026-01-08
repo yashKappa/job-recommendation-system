@@ -1,10 +1,6 @@
 .profileData{
-    margin-right: 2rem;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-bottom: 3rem;
-    margin-top: 3rem;
     color: #1f2937;
+    padding: 20px;
 }
 
 .profileData h2{
@@ -13,31 +9,32 @@
 }
 
 .profileHead {
-  margin: 40px auto;
-  padding: 30px;
-  background: #1f2937;
+background: #1f2937;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   display: flex;
+  align-items: center;
+  padding: 20px;
 }
 
 .profileHead img{
     width: 150px;   
     border-radius: 10rem;
     box-shadow: 0 10px 30px rgb(0, 0, 0);
+    margin: 20px;
 }
 
 .subData{
-    margin: 10px 0px 20px 50px;
     border-radius: 0.3rem;
     color: white;
+    padding: 20px;
 }
 
 .subData p{
-    padding: 8px 10px;
     color: white;
+    padding-bottom: 10px;
 }
 
 .subData strong{
@@ -50,14 +47,15 @@
   box-shadow:inset 0 4px 10px #1f29376e;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #1f2937;
-  padding: 30px;
-  margin-bottom: 2rem;
   border: 5px solid #1f2937;
+  margin-top: 2rem;
+  padding: 20px;
 }
 
 .profileSubData p{
-    padding: 10px;
     color: #1f2937;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .profileSubData Strong{
@@ -81,7 +79,7 @@
 
 .profileSubData .links{
     display: flex;
-    margin-top: 1rem;
+
 }
 
 .profileSubData img{
@@ -97,7 +95,6 @@
 .linkImg {
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10px;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -106,7 +103,7 @@
 .resume {
   display: inline-block;
   margin-top: 1rem;
-  padding: 10px 20px;
+  padding: 15px 0px;
   background-color: #1f2937;
   color: #ff6600;
   text-decoration: none;
@@ -116,108 +113,37 @@
   text-align: center;
 }
 
-/* ========================= */
-/* RESPONSIVE PROFILE PAGE */
-/* ========================= */
+@media (max-width: 768px) {
 
-/* Tablets */
-@media (max-width: 1024px) {
   .profileData {
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 5rem;
+    color: #1f2937;
   }
 
   .profileHead {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
-  }
+        flex-direction: column;
+    }
 
-  .subData {
-    margin: 20px 0 0 0;
-  }
+    .profileSubData p{
+        padding-left: 1.5rem;
+    }
 
-  .profileSubData p{
-    padding-left: 0.5rem;
-  }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .profileData {
-    width: 100%;
-    margin-top: 3rem;
-  }
+@media (max-width: 480px) {
+    .profileHead {
+        flex-direction: column;
+    }
 
-  .profileData h2{
-    margin-top: 6rem;
-  }
-
-  .profileData h2 {
-    font-size: 26px;
-    text-align: center;
-  }
-
-  .profileHead {
-    padding: 20px;
-  }
-
-  .profileHead img {
-    width: 120px;
-    margin-bottom: 10px;
-  }
-
-  .subData p {
-    padding: 6px 0;
-    font-size: 14px;
-  }
-
-  .profileSubData {
-    padding: 20px;
-  }
-
-  .profileSubData p {
-    padding: 6px 10px;
-    font-size: 14px;
-  }
-
-  .profileSubData h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-
-  /* Social links wrap */
-  .profileSubData .links {
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: space-around;
+     .profileSubData .links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 by 2 grid */
+    gap: 16px;
+    justify-items: center;
+    align-items: center;
   }
 
   .linkImg {
     margin-bottom: 0;
   }
 
-  .resume {
-    width: 100%;
-    font-size: 14px;
-    padding: 12px;
-  }
-  
-}
-
-/* Small phones */
-@media (max-width: 480px) {
-
-  .profileHead img {
-    width: 100px;
-  }
-
-  .profileData h2 {
-    font-size: 22px;
-  }
-
-  .profileSubData {
-    padding: 16px;
-  }
 }
