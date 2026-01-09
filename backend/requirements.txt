@@ -6,3 +6,4 @@ PyPDF2
 nltk
 scikit-learn
 flask_cors
+pdfplumber
