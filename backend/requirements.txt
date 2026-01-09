@@ -1,0 +1,7 @@
+Flask
+gunicorn
+requests
+python-dotenv
+PyPDF2
+nltk
+scikit-learn
