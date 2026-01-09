@@ -5,5 +5,8 @@ python-dotenv
 PyPDF2
 nltk
 scikit-learn
-flask_cors
+flask-cors
 pdfplumber
+python-docx
+wordsegment
+numpy
