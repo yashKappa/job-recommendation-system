@@ -18,3 +18,4 @@ const JobResults = ({ jobs }) => {
 };
 
 export default JobResults;
+

@@ -115,3 +115,18 @@
 }
 
 }
+
+.skill-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.skill-badge {
+  background-color: #f0f4ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}

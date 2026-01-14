@@ -1,9 +1,34 @@
+
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, increment, serverTimestamp } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../Firebase";
 import JobResults from "./jobService";
 import "./Jobs.css";
+
+const buildSkillFrequency = (skills, jobs) => {
+  const freq = {};
+
+  skills.forEach(skill => {
+    freq[skill] = 0;
+
+    jobs.forEach(job => {
+      const description = job.description?.toLowerCase() || "";
+      const jobSkills = (job.skills || []).map(s => s.toLowerCase());
+
+      // ✅ Match ONLY if skill is actually required
+      if (
+        description.includes(skill.toLowerCase()) ||
+        jobSkills.includes(skill.toLowerCase())
+      ) {
+        freq[skill]++;
+      }
+    });
+  });
+
+  return freq;
+};
+
 
 const Jobs = () => {
   const [resumeURL, setResumeURL] = useState(null);
@@ -71,6 +96,17 @@ const Jobs = () => {
 
       const data = await res.json();
 
+      const skillFrequency = buildSkillFrequency(
+  data.analysis.skills || [],
+  data.jobs || []
+);
+
+const skillFrequencyUpdates = {};
+Object.entries(skillFrequency).forEach(([skill, count]) => {
+  skillFrequencyUpdates[`skillMatchFrequency.${skill}`] = increment(count);
+});
+
+
       setAnalysis(data.analysis);
       setJobs(data.jobs);
 
@@ -78,14 +114,18 @@ const Jobs = () => {
       localStorage.setItem("recommendedJobs", JSON.stringify(data.jobs));
 
       await setDoc(
-        doc(db, "users", auth.currentUser.uid, "analytics", "jobStats"),
-        {
-          resumeAnalysisCount: increment(1),
-          jobsShownCount: data.jobs.length,
-          lastAnalyzedAt: serverTimestamp(),
-        },
-        { merge: true }
-      );
+  doc(db, "users", auth.currentUser.uid, "analytics", "jobStats"),
+  {
+    resumeAnalysisCount: increment(1),
+    jobsShownCount: data.jobs.length,
+    keywordsCount: data.analysis.keywords?.length || 0,
+    skillsCount: data.analysis.skills?.length || 0,
+    lastAnalyzedAt: serverTimestamp(),
+    ...skillFrequencyUpdates
+  },
+  { merge: true }
+);
+
     } catch (err) {
       console.error("Analyze error:", err);
     } finally {
@@ -178,3 +218,4 @@ const Jobs = () => {
 };
 
 export default Jobs;
+

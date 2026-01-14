@@ -10,86 +10,113 @@ import {
 } from "react-icons/fa";
 import "./Home.css";
 
-const COLORS = ["#1e3a8a", "#f97316", "#22c55e", "#ef4444"];
+const COLORS = ["#1e3a8a", "#f97316"];
 
 const AnalyticsDashboard = () => {
-  const [stats, setStats] = useState(null);
+const [stats, setStats] = useState({});
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (!auth.currentUser) return;
+ useEffect(() => {
+  const fetchStats = async () => {
+    if (!auth.currentUser) {
+      setLoading(false);
+      return;
+    }
 
-      const ref = doc(
-        db,
-        "users",
-        auth.currentUser.uid,
-        "analytics",
-        "jobStats"
-      );
+    const ref = doc(
+      db,
+      "users",
+      auth.currentUser.uid,
+      "analytics",
+      "jobStats"
+    );
 
-      const snap = await getDoc(ref);
-      if (!snap.exists()) return;
+    const snap = await getDoc(ref);
 
-      const data = snap.data();
-      setStats(data);
+    if (!snap.exists()) {
+      // 👇 important
+      setStats({});
+      setLoading(false);
+      return;
+    }
 
-      // Map → Array
-      const jobsArray = Object.values(data.appliedJobs || {});
-      setAppliedJobs(jobsArray);
-    };
+    const data = snap.data();
+    setStats(data);
+    setAppliedJobs(Object.values(data.appliedJobs || {}));
+    setLoading(false);
+  };
 
-    fetchStats();
-  }, []);
+  fetchStats();
+}, []);
 
-  if (!stats) return <p className="load">Loading analytics...</p>;
+if (loading) {
+  return <p className="load">Loading analytics...</p>;
+}
 
-  /* ---------- DATA PROCESSING ---------- */
+/* ---------- DATA PROCESSING ---------- */
 
-  const skillChartData = Object.entries(
-    stats.skillMatchFrequency || {}
-  ).map(([skill, count]) => ({
-    skill,
-    count
-  }));
+// ✅ rebuild skillMatchFrequency from flat Firestore keys
+const skillChartData = Object.entries(stats)
+  .filter(([key, value]) =>
+    key.startsWith("skillMatchFrequency.") &&
+    typeof value === "number" &&
+    value > 0
+  )
+  .map(([key, value]) => ({
+    skill: key
+      .replace("skillMatchFrequency.", "")
+      .replace(/\./g, " ")
+      .toUpperCase(),
+    count: value
+  }))
+  .sort((a, b) => b.count - a.count);
 
-  const totalSkillFrequency = Object.values(
-    stats.skillMatchFrequency || {}
-  ).reduce((sum, count) => sum + count, 0);
+// ✅ total skill frequency
+const totalSkillFrequency = skillChartData.reduce(
+  (sum, item) => sum + item.count,
+  0
+);
 
-  const pieData = [
-    { name: "Applied", value: stats.applyClickCount || 0 },
-    { name: "Viewed", value: stats.jobsShownCount || 0 },
-  ];
+// ✅ pie chart
+const pieData = [
+  { name: "Applied", value: stats.applyClickCount || 0 },
+  { name: "Viewed", value: stats.jobsShownCount || 0 }
+];
 
   return (
     <div className="analytics-page">
       <h2>📊 Job Analytics Dashboard</h2>
 
-      {/* ===== TOP STATS ===== */}
+      {/* ================= STATS ================= */}
       <div className="stats-grid">
-        <StatCard icon={<FaBriefcase />} label="Jobs Applied" value={stats.applyClickCount} />
-        <StatCard icon={<FaEye />} label="Jobs Shown" value={stats.jobsShownCount} />
-        <StatCard icon={<FaBrain />} label="Resume Analyzed" value={stats.resumeAnalysisCount} />
-        <StatCard icon={<FaTools />} label="Skills Detected" value={stats.skillsCount} />
-        <StatCard icon={<FaKey />} label="Keywords Found" value={stats.keywordsCount} />
+        <StatCard icon={<FaBriefcase />} label="Jobs Applied" value={stats.applyClickCount || 0} />
+        <StatCard icon={<FaEye />} label="Jobs Shown" value={stats.jobsShownCount || 0} />
+        <StatCard icon={<FaBrain />} label="Resume Analyzed" value={stats.resumeAnalysisCount || 0} />
+        <StatCard icon={<FaTools />} label="Skills Detected" value={stats.skillsCount || 0} />
+        <StatCard icon={<FaKey />} label="Keywords Found" value={stats.keywordsCount || 0} />
         <StatCard icon={<FaKey />} label="Total Skill Matches" value={totalSkillFrequency} />
       </div>
 
-      {/* ===== SKILL MATCH BAR CHART ===== */}
+      {/* ================= SKILL BAR CHART ================= */}
       <div className="chart-card">
         <h3>🧠 Skill Match Frequency</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={skillChartData}>
-            <XAxis dataKey="skill" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#1e3a8a" radius={[6, 6, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+
+        {skillChartData.length === 0 ? (
+          <p className="empty-chart">No skill matches detected yet.</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={skillChartData}>
+              <XAxis dataKey="skill" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#1e3a8a" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
-      {/* ===== APPLY VS VIEW PIE ===== */}
+      {/* ================= PIE CHART ================= */}
       <div className="chart-card">
         <h3>🎯 Apply vs Viewed Jobs</h3>
         <ResponsiveContainer width="100%" height={260}>
@@ -104,48 +131,50 @@ const AnalyticsDashboard = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* ===== APPLIED JOBS TABLE ===== */}
+      {/* ================= APPLIED JOBS ================= */}
       <div className="chart-card full-width">
         <h3>📄 Applied Jobs</h3>
+
         <div className="table-wrapper">
-        <table className="jobs-table">
-          <thead>
-            <tr>
-              <th>Job Title</th>
-              <th>Company</th>
-              <th>Applied At</th>
-              <th>Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appliedJobs.length === 0 && (
+          <table className="jobs-table">
+            <thead>
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
-                  No jobs applied yet
-                </td>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Applied At</th>
+                <th>Link</th>
               </tr>
-            )}
-            {appliedJobs.map((job, i) => (
-              <tr key={i}>
-                <td>{job.title}</td>
-                <td>{job.company}</td>
-                <td>{job.clickedAt?.toDate().toLocaleString()}</td>
-                <td>
-                  <a href={job.link} target="_blank" rel="noreferrer">
-                    View
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appliedJobs.length === 0 ? (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: "center" }}>
+                    No jobs applied yet
+                  </td>
+                </tr>
+              ) : (
+                appliedJobs.map((job, i) => (
+                  <tr key={i}>
+                    <td>{job.title}</td>
+                    <td>{job.company}</td>
+                    <td>{job.clickedAt?.toDate().toLocaleString()}</td>
+                    <td>
+                      <a href={job.link} target="_blank" rel="noreferrer">
+                        View
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   );
 };
 
-/* ---------- STAT CARD ---------- */
+/* ================= STAT CARD ================= */
 const StatCard = ({ icon, label, value }) => (
   <div className="stat-card">
     <div className="stat-icon">{icon}</div>

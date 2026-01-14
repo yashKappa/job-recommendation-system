@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { doc, setDoc, increment, Timestamp, getDocs, collection } from "firebase/firestore";
 import { auth, db } from "../../Firebase";
@@ -153,3 +154,4 @@ const JobResults = ({ jobs, analysis }) => {
 };
 
 export default JobResults;
+
