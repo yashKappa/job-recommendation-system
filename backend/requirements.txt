@@ -1,4 +1,9 @@
 flask
+flask-cors
 numpy
 pandas
 requests
+pdfplumber
+python-docx
+spacy
+wordsegment
