@@ -76,13 +76,13 @@ if (resume) {
   const resumePath = `${userId}/resume_${Date.now()}_${sanitizedFileName}`;
 
   const { error: resumeUploadError } = await supabase.storage
-    .from("resume")
+    .from("Candidates resume")
     .upload(resumePath, resume);
 
   if (resumeUploadError) throw resumeUploadError;
 
   const { data } = supabase.storage
-    .from("resume")
+    .from("Candidates resume")
     .getPublicUrl(resumePath);
 
   resumeURL = data.publicUrl;
@@ -94,13 +94,13 @@ if (profileImage) {
   const imagePath = `${userId}/profile_${Date.now()}_${sanitizedFileName}`;
 
   const { error: imageUploadError } = await supabase.storage
-    .from("resume")
+    .from("Candidates resume")
     .upload(imagePath, profileImage);
 
   if (imageUploadError) throw imageUploadError;
 
   const { data } = supabase.storage
-    .from("resume")
+    .from("Candidates resume")
     .getPublicUrl(imagePath);
 
   profileImageURL = data.publicUrl;

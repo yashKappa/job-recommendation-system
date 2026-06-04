@@ -14,7 +14,7 @@ const buildSkillFrequency = (skills, jobs) => {
 
     jobs.forEach(job => {
       const description = job.description?.toLowerCase() || "";
-      const jobSkills = (job.skills || []).map(s => s.toLowerCase());
+      const jobSkills = (job.matched_skills || []).map(s => s.toLowerCase());
 
       // ✅ Match ONLY if skill is actually required
       if (
@@ -88,7 +88,7 @@ const Jobs = () => {
     localStorage.removeItem("recommendedJobs");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/analyze-and-recommend", {
+      const res = await fetch("http://127.0.0.1:10000/analyze-and-recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resumeURL }),

@@ -16,7 +16,64 @@ except Exception as e:
     print(f"[ERROR] Failed to load skills.json: {e}")
     RAW_SKILLS = []
 
+def infer_role(skills):
+    skills = [s.lower() for s in skills]
 
+    # MERN / Full Stack
+    if (
+        "react" in skills
+        and "node.js" in skills
+        and "mongodb" in skills
+    ):
+        return "Full Stack Developer"
+
+    # Frontend
+    if (
+        "react" in skills
+        or "angular" in skills
+        or "vue" in skills
+    ):
+        return "Frontend Developer"
+
+    # Backend
+    if (
+        "node.js" in skills
+        or "express.js" in skills
+        or "django" in skills
+        or "spring boot" in skills
+    ):
+        return "Backend Developer"
+
+    # Machine Learning
+    if (
+        "python" in skills
+        and (
+            "machine learning" in skills
+            or "tensorflow" in skills
+            or "pytorch" in skills
+        )
+    ):
+        return "Machine Learning Engineer"
+
+    # Data Analyst
+    if (
+        "sql" in skills
+        and (
+            "power bi" in skills
+            or "tableau" in skills
+            or "excel" in skills
+        )
+    ):
+        return "Data Analyst"
+
+    # App Support
+    if (
+        "sql" in skills
+        and "linux" in skills
+    ):
+        return "Application Support Engineer"
+
+    return "Software Engineer"
 # ------------------ HELPERS ------------------
 
 def normalize(text: str) -> str:
@@ -61,6 +118,7 @@ def analyze_resume(text: str):
             skills_found.append(skill)
 
     skills_found = sorted(set(skills_found))
+    role = infer_role(skills_found)
 
     # ----------- EMAIL EXTRACTION -----------
     email_match = re.findall(
@@ -97,10 +155,11 @@ def analyze_resume(text: str):
     }
 
     return {
-        "email": email,
-        "skills": skills_found,
-        "keywords": keywords,
-        "location": locations,
-        "experience": experience,
-        "metrics": metrics   # 🔥 IMPORTANT FOR ANALYTICS
-    }
+    "role": role,
+    "email": email,
+    "skills": skills_found,
+    "keywords": keywords,
+    "location": locations,
+    "experience": experience,
+    "metrics": metrics
+}

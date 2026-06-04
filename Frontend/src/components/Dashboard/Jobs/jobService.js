@@ -56,16 +56,13 @@ const JobResults = ({ jobs, analysis }) => {
 
     try {
       await setDoc(
-        doc(db, "users", auth.currentUser.uid, "savedJobs", jobId),
-        {
-          title: job.title,
-          company: job.company,
-          location: job.location,
-          score: job.score,
-          link: job.apply_link,
-          savedAt: Timestamp.now()
-        }
-      );
+  doc(db, "users", auth.currentUser.uid, "savedJobs", jobId),
+  {
+    ...job,
+    detected_role: analysis?.role || "",
+    savedAt: Timestamp.now()
+  }
+);
 
       setSavedJobIds(prev => new Set(prev).add(jobId));
       setPopup({ message: "Job saved successfully", type: "success" });
@@ -110,7 +107,23 @@ const JobResults = ({ jobs, analysis }) => {
                     <h4>{job.title}</h4>
                     <p><strong>Company:</strong> {job.company}</p>
                     <p><strong>Location:</strong> {job.location}</p>
+                    <p><strong>Salary:</strong> {job.salary || "N/A"}</p>
                     <p><strong>Match Score:</strong> {job.score}</p>
+                    <p><strong>Match %: </strong>{job.match_percentage}%</p>
+{/* <p>
+  Matched Skills:
+  {job.matched_skills?.length
+    ? job.matched_skills.join(", ")
+    : " None"}
+</p> */}
+                      <p>
+    <strong>Detected Role:</strong>{" "}
+    {analysis.role || "Software Engineer"}
+  </p>
+  <p>
+  <strong>Matched Skills:</strong>{" "}
+  {job.matched_skills?.join(", ") || "None"}
+</p>
                   </div>
 
                   <div className="job-actions">

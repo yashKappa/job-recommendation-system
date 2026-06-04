@@ -51,50 +51,60 @@ const Saved = () => {
 
   return (
     <div className="jobSaved">
-    <div className="Matching-Job">
+      <div className="Matching-Job">
 
-      {savedJobs.length === 0 ? (
-        <div className="empty-jobs">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/NoData.svg`}
-            alt="No saved jobs"
-          />
-          <p>No saved jobs yet.</p>
-        </div>
-      ) : (
-        <div className="jobs-box">
-                  <h3>Saved Jobs</h3>
-          <div className="job-results">
-            {savedJobs.map((job) => (
-              <div key={job.id} className="job-card">
-                <div className="card-data">
-                  <h4>{job.title}</h4>
-                  <p><strong>Company:</strong> {job.company}</p>
-                  <p><strong>Location:</strong> {job.location}</p>
-                  <p><strong>Match Score:</strong> {job.score}</p>
-                </div>
-
-                <div className="job-actions">
-                  <a
-                    href={job.link}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Apply Now ↗
-                  </a>
-
-                  <button
-                    className="save-btn"
-                    onClick={() => removeSavedJob(job.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
+        {savedJobs.length === 0 ? (
+          <div className="empty-jobs">
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/NoData.svg`}
+              alt="No saved jobs"
+            />
+            <p>No saved jobs yet.</p>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="jobs-box">
+            <h3>Saved Jobs</h3>
+            <div className="job-results">
+              {savedJobs.map((job) => (
+                <div key={job.id} className="job-card">
+                  <div className="card-data">
+                    <h4>{job.title}</h4>
+                    <p><strong>Company:</strong> {job.company}</p>
+                    <p><strong>Location:</strong> {job.location}</p>
+                    <p><strong>Salary:</strong> {job.salary || "N/A"}</p>
+                    <p><strong>Match Score:</strong> {job.score}</p>
+                    <p><strong>Match %: </strong>{job.match_percentage}%</p>
+                    <p>
+                      <strong>Detected Role:</strong>{" "}
+                      {job.role || "Software Engineer"}
+                    </p>
+                    <p>
+                      <strong>Matched Skills:</strong>{" "}
+                      {job.matched_skills?.join(", ") || "None"}
+                    </p>
+                  </div>
+
+                  <div className="job-actions">
+                    <a
+                      href={job.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Apply Now ↗
+                    </a>
+
+                    <button
+                      className="save-btn"
+                      onClick={() => removeSavedJob(job.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

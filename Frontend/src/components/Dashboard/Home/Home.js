@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteField } from "firebase/firestore";
 import { auth, db } from "../../Firebase";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -13,76 +13,101 @@ import "./Home.css";
 const COLORS = ["#1e3a8a", "#f97316"];
 
 const AnalyticsDashboard = () => {
-const [stats, setStats] = useState({});
+  const [stats, setStats] = useState({});
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  const fetchStats = async () => {
-    if (!auth.currentUser) {
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (!auth.currentUser) {
+        setLoading(false);
+        return;
+      }
+
+      const ref = doc(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "analytics",
+        "jobStats"
+      );
+
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        // 👇 important
+        setStats({});
+        setLoading(false);
+        return;
+      }
+
+      const data = snap.data();
+      setStats(data);
+      setAppliedJobs(Object.values(data.appliedJobs || {}));
       setLoading(false);
-      return;
+    };
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return <p className="load">Loading analytics...</p>;
+  }
+
+  const deleteAppliedJob = async (jobLink) => {
+    if (!auth.currentUser) return;
+
+    try {
+      const analyticsRef = doc(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "analytics",
+        "jobStats"
+      );
+
+      await updateDoc(analyticsRef, {
+        [`appliedJobs.${jobLink}`]: deleteField()
+      });
+
+      setAppliedJobs((prev) =>
+        prev.filter((job) => job.link !== jobLink)
+      );
+
+    } catch (error) {
+      console.error("Delete failed:", error);
     }
-
-    const ref = doc(
-      db,
-      "users",
-      auth.currentUser.uid,
-      "analytics",
-      "jobStats"
-    );
-
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-      // 👇 important
-      setStats({});
-      setLoading(false);
-      return;
-    }
-
-    const data = snap.data();
-    setStats(data);
-    setAppliedJobs(Object.values(data.appliedJobs || {}));
-    setLoading(false);
   };
 
-  fetchStats();
-}, []);
+  /* ---------- DATA PROCESSING ---------- */
 
-if (loading) {
-  return <p className="load">Loading analytics...</p>;
-}
+  // ✅ rebuild skillMatchFrequency from flat Firestore keys
+  const skillChartData = Object.entries(stats)
+    .filter(([key, value]) =>
+      key.startsWith("skillMatchFrequency.") &&
+      typeof value === "number" &&
+      value > 0
+    )
+    .map(([key, value]) => ({
+      skill: key
+        .replace("skillMatchFrequency.", "")
+        .replace(/\./g, " ")
+        .toUpperCase(),
+      count: value
+    }))
+    .sort((a, b) => b.count - a.count);
 
-/* ---------- DATA PROCESSING ---------- */
+  // ✅ total skill frequency
+  const totalSkillFrequency = skillChartData.reduce(
+    (sum, item) => sum + item.count,
+    0
+  );
 
-// ✅ rebuild skillMatchFrequency from flat Firestore keys
-const skillChartData = Object.entries(stats)
-  .filter(([key, value]) =>
-    key.startsWith("skillMatchFrequency.") &&
-    typeof value === "number" &&
-    value > 0
-  )
-  .map(([key, value]) => ({
-    skill: key
-      .replace("skillMatchFrequency.", "")
-      .replace(/\./g, " ")
-      .toUpperCase(),
-    count: value
-  }))
-  .sort((a, b) => b.count - a.count);
-
-// ✅ total skill frequency
-const totalSkillFrequency = skillChartData.reduce(
-  (sum, item) => sum + item.count,
-  0
-);
-
-// ✅ pie chart
-const pieData = [
-  { name: "Applied", value: stats.applyClickCount || 0 },
-  { name: "Viewed", value: stats.jobsShownCount || 0 }
-];
+  // ✅ pie chart
+  const pieData = [
+    { name: "Applied", value: stats.applyClickCount || 0 },
+    { name: "Viewed", value: stats.jobsShownCount || 0 }
+  ];
 
   return (
     <div className="analytics-page">
@@ -143,6 +168,7 @@ const pieData = [
                 <th>Company</th>
                 <th>Applied At</th>
                 <th>Link</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -162,6 +188,15 @@ const pieData = [
                       <a href={job.link} target="_blank" rel="noreferrer">
                         View
                       </a>
+                    </td>
+
+                    <td>
+                      <button
+                        className="delete-btn"
+                        onClick={() => deleteAppliedJob(job.link)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))

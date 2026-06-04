@@ -8,6 +8,11 @@ const JobResults = ({ jobs }) => {
           <h4>{job.title}</h4>
           <p>{job.company}</p>
           <p>{job.location}</p>
+          <p>{job.salary}</p>
+            <p>
+    <strong>Detected Role:</strong>{" "}
+    
+  </p>
           <a href={job.apply_link} target="_blank" rel="noreferrer">
             Apply
           </a>
