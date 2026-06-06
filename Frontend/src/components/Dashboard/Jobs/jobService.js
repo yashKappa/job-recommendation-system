@@ -124,6 +124,12 @@ const JobResults = ({ jobs, analysis }) => {
   <strong>Matched Skills:</strong>{" "}
   {job.matched_skills?.join(", ") || "None"}
 </p>
+
+<p>
+  <strong>AI Similarity:</strong>
+  {job.semantic_score}%
+</p>
+
                   </div>
 
                   <div className="job-actions">

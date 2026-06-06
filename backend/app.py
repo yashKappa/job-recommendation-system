@@ -34,7 +34,8 @@ def analyze_and_recommend():
         # Job Recommendation using skills only
         jobs = get_jobs(
             role=analysis.get("role"),
-            skills=analysis.get("skills", [])
+            skills=analysis.get("skills", []),
+            resume_text=text
         )
 
         return jsonify({
