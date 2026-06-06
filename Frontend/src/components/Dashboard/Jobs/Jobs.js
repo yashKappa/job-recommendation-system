@@ -98,7 +98,7 @@ const Jobs = () => {
 
       const skillFrequency = buildSkillFrequency(
   data.analysis.skills || [],
-  data.jobs || []
+  data.jobs.jobs || []
 );
 
 const skillFrequencyUpdates = {};
@@ -108,10 +108,10 @@ Object.entries(skillFrequency).forEach(([skill, count]) => {
 
 
       setAnalysis(data.analysis);
-      setJobs(data.jobs);
+      setJobs(data.jobs.jobs || []);
 
       localStorage.setItem("resumeAnalysis", JSON.stringify(data.analysis));
-      localStorage.setItem("recommendedJobs", JSON.stringify(data.jobs));
+      localStorage.setItem("recommendedJobs", JSON.stringify(data.jobs.jobs));
 
       await setDoc(
   doc(db, "users", auth.currentUser.uid, "analytics", "jobStats"),
@@ -154,7 +154,7 @@ Object.entries(skillFrequency).forEach(([skill, count]) => {
         {analyzing && (
           <span className="Analyzing">
             <img
-              src="https://media.tenor.com/6bLqzMcCDzEAAAAM/marmalady-loading-cat.gif"
+              src="https://ielts24x7.com/public/images/loading-gif-orange-5.gif"
               alt="loading"
             />
           </span>

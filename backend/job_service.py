@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from collections import Counter
 
 from semantic_matcher import calculate_similarity
-from analyzer import RAW_SKILLS
+from resume_analyzer import RAW_SKILLS
 
 load_dotenv()
 
@@ -49,9 +49,9 @@ def get_jobs(role, skills, resume_text):
     # Search top skills
     queries.extend(skills[:5])
 
-    print("\n========== RESUME ==========")
-    print("Role:", role)
-    print("Skills:", skills)
+    # print("\n========== RESUME ==========")
+    # print("Role:", role)
+    # print("Skills:", skills)
 
     jobs = fetch_jobs_from_api(queries)
 
@@ -187,9 +187,9 @@ def rank_jobs(
             description
         )
 
-        semantic_percentage = round(
-            semantic_score * 100,
-            2
+        semantic_percentage = calculate_similarity(
+            resume_text,
+            description
         )
 
         # -----------------
