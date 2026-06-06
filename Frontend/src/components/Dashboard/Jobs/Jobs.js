@@ -154,6 +154,7 @@ Object.entries(skillFrequency).forEach(([skill, count]) => {
         {analyzing && (
           <span className="Analyzing">
             <img
+            className="loading-gif"
               src="https://ielts24x7.com/public/images/loading-gif-orange-5.gif"
               alt="loading"
             />
