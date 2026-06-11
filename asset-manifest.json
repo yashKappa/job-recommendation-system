@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/job-recommendation-system/static/css/main.131f38f8.css",
-    "main.js": "/job-recommendation-system/static/js/main.329847f7.js",
+    "main.css": "/job-recommendation-system/static/css/main.c6b62ec4.css",
+    "main.js": "/job-recommendation-system/static/js/main.cb43ce46.js",
     "static/js/453.fb1c0a03.chunk.js": "/job-recommendation-system/static/js/453.fb1c0a03.chunk.js",
     "index.html": "/job-recommendation-system/index.html",
-    "main.131f38f8.css.map": "/job-recommendation-system/static/css/main.131f38f8.css.map",
-    "main.329847f7.js.map": "/job-recommendation-system/static/js/main.329847f7.js.map",
+    "main.c6b62ec4.css.map": "/job-recommendation-system/static/css/main.c6b62ec4.css.map",
+    "main.cb43ce46.js.map": "/job-recommendation-system/static/js/main.cb43ce46.js.map",
     "453.fb1c0a03.chunk.js.map": "/job-recommendation-system/static/js/453.fb1c0a03.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.131f38f8.css",
-    "static/js/main.329847f7.js"
+    "static/css/main.c6b62ec4.css",
+    "static/js/main.cb43ce46.js"
   ]
 }
