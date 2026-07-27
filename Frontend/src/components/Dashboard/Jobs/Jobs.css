@@ -52,6 +52,16 @@
 
 .analyze-btn:hover {
   background-color: #e65c00ea;
+    color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  display: block;
+  width: 100%;
 }
 
 /* Analysis Box */
