@@ -36,7 +36,7 @@
 }
 
 /* Buttons */
-.jobs-container .analyze-btn {
+.jobs-container button.analyze-btn {
   background-color: #e65c00; /* Dark Orange */
   color: #fff;
   border: none;
