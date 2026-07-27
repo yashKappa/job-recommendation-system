@@ -15,4 +15,4 @@ en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_
 
 gunicorn==23.0.0
 spacy
-sentence_transformers
+sentence-transformers
